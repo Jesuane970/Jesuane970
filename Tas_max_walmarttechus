@@ -1,0 +1,88 @@
+// In the file PowerHeap.java
+import java.util.ArrayList;
+import java.util.List;
+
+public class PowerHeap {
+    private List<Integer> heap;
+    private int childrenCount;
+
+    public PowerHeap(int childrenPower) {
+        this.heap = new ArrayList<>();
+        this.childrenCount = (int) Math.pow(2, childrenPower);
+    }
+
+    private int parent(int index) {
+        return (index - 1) / childrenCount;
+    }
+
+    private int child(int index, int k) {
+        return childrenCount * index + k + 1;
+    }
+
+    private void swap(int index1, int index2) {
+        int temp = heap.get(index1);
+        heap.set(index1, heap.get(index2));
+        heap.set(index2, temp);
+    }
+
+    public void insert(int value) {
+        heap.add(value);
+        heapifyUp(heap.size() - 1);
+    }
+
+    private void heapifyUp(int index) {
+        int currentIndex = index;
+        while (currentIndex > 0 && heap.get(currentIndex) > heap.get(parent(currentIndex))) {
+            swap(currentIndex, parent(currentIndex));
+            currentIndex = parent(currentIndex);
+        }
+    }
+
+    public int popMax() {
+        if (heap.isEmpty()) {
+            throw new IllegalStateException("Heap is empty");
+        }
+
+        int maxValue = heap.get(0);
+        heap.set(0, heap.get(heap.size() - 1));
+        heap.remove(heap.size() - 1);
+        heapifyDown(0);
+
+        return maxValue;
+    }
+
+    private void heapifyDown(int index) {
+        int currentIndex = index;
+        int largest = index;
+
+        while (true) {
+            for (int i = 1; i <= childrenCount; i++) {
+                int childIndex = child(currentIndex, i);
+                if (childIndex < heap.size() && heap.get(childIndex) > heap.get(largest)) {
+                    largest = childIndex;
+                }
+            }
+
+            if (largest != currentIndex) {
+                swap(currentIndex, largest);
+                currentIndex = largest;
+            } else {
+                break;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        PowerHeap heap = new PowerHeap(2); // 2^2 = 4 children per node
+        heap.insert(10);
+        heap.insert(20);
+        heap.insert(5);
+        heap.insert(6);
+        heap.insert(1);
+        heap.insert(8);
+        heap.insert(9);
+
+        System.out.println(heap.popMax()); // Should print the maximum element
+        System.out.println(heap.popMax()); // Continue to pop max elements
+    }
+}
