@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @Jesuane970
 - 👀 I’m interested in .software engineering..
-- 🌱 I’m currently learning ..programming.
+- 🌱 I’m currently learning ..progamming and technologies stack.
 - 💞️ I’m looking to collaborate on .software development project..
 - 📫 How to reach me ..I am available at gobenzt@outlook.fr.
 - 😄 Pronouns: .She/her..
